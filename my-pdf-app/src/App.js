@@ -1,14 +1,13 @@
 import React from "react";
 import GeneratePDF from "./GeneratePDF";
-import './App.css'; // Optional: add custom CSS if needed
+import './form.css';
+import PublicationForm from "./publicationForm";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-    
+        {/* <PublicationForm /> */}
         <GeneratePDF />
-      </header>
     </div>
   );
 }
