@@ -31,6 +31,7 @@ const GeneratePDF = () => {
           // }
 
           const doc = new jsPDF();
+          console.log("hi")
 
           // Base64 Images (replace with your actual images)
           const vnrvjietLogo = "data:image/jpeg;base64,..."; // VNRVJIET logo placeholder
@@ -47,8 +48,8 @@ const GeneratePDF = () => {
           // Add subtitle
           doc.setFontSize(16);
           doc.setTextColor(100);
-          doc.text(`Research Papers by ${faculty.faculty_name}`, 50, 30);
-
+          doc.text(`Research Papers by ${faculty.facultyName}`, 50, 30);
+          console.log("Bye")
           // Add research image
           doc.addImage(researchImage, "JPEG", 160, 8, 40, 40);
 
@@ -60,50 +61,50 @@ const GeneratePDF = () => {
           doc.setFontSize(12);
           doc.setTextColor(50);
           doc.text(
-            `List of research papers published by ${faculty.faculty_name}.`,
+            `List of research papers published by ${faculty.facultyName}.`,
             14,
             48
           );
 
           // Prepare data for the table
-          const tableData = faculty.publications.map((publication) => [
-            publication.publicationId,
-            publication.publicationTitle,
-            publication.publicationType,
-            publication.dateOfPublication,
-          ]);
+          // const tableData = faculty.publications.map((publication) => [
+          //   publication.publicationId,
+          //   publication.publicationTitle,
+          //   publication.publicationType,
+          //   publication.dateOfPublication,
+          // ]);
 
           // Add table with styles
-          doc.autoTable({
-            head: [["ID", "Title", "Type", "Year"]],
-            body: tableData,
-            startY: 60,
-            styles: {
-              fontSize: 10,
-              halign: "center",
-              valign: "middle",
-              cellPadding: 3,
-              overflow: "linebreak",
-              lineColor: [44, 62, 80],
-              lineWidth: 0.5,
-              font: "helvetica",
-              textColor: [44, 62, 80],
-            },
-            headStyles: {
-              fillColor: [23, 162, 184],
-              textColor: [255, 255, 255],
-              fontSize: 11,
-              fontStyle: "bold",
-            },
-            bodyStyles: {
-              fillColor: [245, 245, 245],
-            },
-            alternateRowStyles: {
-              fillColor: [255, 255, 255],
-            },
-            margin: { top: 10 },
-          });
-
+          // doc.autoTable({
+          //   head: [["ID", "Title", "Type", "Year"]],
+          //   body: tableData,
+            // startY: 60,
+            // styles: {
+            //   fontSize: 10,
+            //   halign: "center",
+            //   valign: "middle",
+            //   cellPadding: 3,
+            //   overflow: "linebreak",
+            //   lineColor: [44, 62, 80],
+            //   lineWidth: 0.5,
+            //   font: "helvetica",
+            //   textColor: [44, 62, 80],
+            // },
+            // headStyles: {
+            //   fillColor: [23, 162, 184],
+            //   textColor: [255, 255, 255],
+            //   fontSize: 11,
+            //   fontStyle: "bold",
+            // },
+          //   bodyStyles: {
+          //     fillColor: [245, 245, 245],
+          //   },
+          //   alternateRowStyles: {
+          //     fillColor: [255, 255, 255],
+          //   },
+          //   margin: { top: 10 },
+          // });
+          console.log("Reached")
           // Footer with page number
           const pageCount = doc.internal.getNumberOfPages();
           for (let i = 1; i <= pageCount; i++) {
@@ -117,7 +118,7 @@ const GeneratePDF = () => {
           }
 
           // Save the PDF
-          doc.save(`${faculty.faculty_name}_Published_Papers.pdf`);
+          doc.save(`${faculty.facultyName}_Published_Papers.pdf`);
         } else {
           alert("Faculty ID not found or no publications available.");
         }
