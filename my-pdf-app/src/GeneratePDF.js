@@ -5,21 +5,31 @@ import axios from "axios";
 
 const GeneratePDF = () => {
   const [id, setId] = useState("");
-  const [facultyData, setFacultyData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (event) => {
     setId(event.target.value);
   };
 
   const generatePDF = () => {
+    setLoading(true);
     // Fetch faculty data based on id
-    fetch(`https://sheetdb.io/api/v1/ohpviljncwcoi?facultyId=${id}`)
+    console.log(id)
+    fetch(`https://sheetdb.io/api/v1/ohpviljncwcoi?publicationId=${id}`)
       .then((response) => response.json())
       .then((data) => {
+        setLoading(false);
+        
         if (data.length > 0) {
-          const faculty = data[0]; // Assuming only one record per faculty ID
-          console.log(faculty)
-          // Create PDF document
+          console.log("go")
+          const faculty = data[0];
+          console.log(faculty) // Assuming only one record per faculty ID
+
+          // if (!faculty.publications || faculty.publications.length === 0) {
+          //   alert("No publications found for this faculty member.");
+          //   return;
+          // }
+
           const doc = new jsPDF();
 
           // Base64 Images (replace with your actual images)
@@ -113,6 +123,7 @@ const GeneratePDF = () => {
         }
       })
       .catch((error) => {
+        setLoading(false);
         console.error("Error fetching data:", error);
         alert("Error fetching data. Please try again later.");
       });
@@ -126,7 +137,9 @@ const GeneratePDF = () => {
           Enter Faculty Id:
           <input type="text" value={id} onChange={handleInputChange} />
         </label>
-        <button onClick={generatePDF}>Generate</button>
+        <button onClick={generatePDF} disabled={loading}>
+          {loading ? "Generating..." : "Generate"}
+        </button>
       </div>
     </div>
   );
