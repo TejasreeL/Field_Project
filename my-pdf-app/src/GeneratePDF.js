@@ -22,10 +22,10 @@ const GeneratePDF = () => {
         if (data.length > 0) {
           const faculty = data[0];
 
-          if (!faculty.publications || faculty.publications.length === 0) {
-            alert("No publications found for this faculty member.");
-            return;
-          }
+          // if (!faculty.publications || faculty.publications.length === 0) {
+          //   alert("No publications found for this faculty member.");
+          //   return;
+          // }
 
           const doc = new jsPDF();
 
@@ -63,17 +63,17 @@ const GeneratePDF = () => {
           );
 
           // Prepare data for the table
-          const tableData = faculty.publications.map((publication) => [
-            publication.publicationId,
-            publication.publicationTitle,
-            publication.publicationType,
-            publication.conferenceOrJournal,
-            publication.dateOfPublication,
-            publication.indexedIn,
-            publication.impactFactor,
-            publication.hIndex,
-            publication.citationCnt,
-          ]);
+          // const tableData = faculty.publications.map((publication) => [
+          //   publication.publicationId,
+          //   publication.publicationTitle,
+          //   publication.publicationType,
+          //   publication.conferenceOrJournal,
+          //   publication.dateOfPublication,
+          //   publication.indexedIn,
+          //   publication.impactFactor,
+          //   publication.hIndex,
+          //   publication.citationCnt,
+          // ]);
 
           // Add table with styles
           doc.autoTable({
@@ -90,7 +90,7 @@ const GeneratePDF = () => {
                 "Citations",
               ],
             ],
-            body: tableData,
+            //body: tableData,
             startY: 60,
             styles: {
               fontSize: 10,
