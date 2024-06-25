@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import axios from "axios";
+import "./abc.css"; // Assuming you create a separate CSS file for styling
 
 const GeneratePDF = () => {
   const [id, setId] = useState("");
@@ -13,25 +14,20 @@ const GeneratePDF = () => {
 
   const generatePDF = () => {
     setLoading(true);
-    // Fetch faculty data based on id
-    console.log(id)
     fetch(`https://sheetdb.io/api/v1/ohpviljncwcoi?publicationId=${id}`)
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
         
         if (data.length > 0) {
-          console.log("go")
           const faculty = data[0];
-          console.log(faculty) // Assuming only one record per faculty ID
 
-          // if (!faculty.publications || faculty.publications.length === 0) {
-          //   alert("No publications found for this faculty member.");
-          //   return;
-          // }
+          if (!faculty.publications || faculty.publications.length === 0) {
+            alert("No publications found for this faculty member.");
+            return;
+          }
 
           const doc = new jsPDF();
-          console.log("hi")
 
           // Base64 Images (replace with your actual images)
           const vnrvjietLogo = "data:image/jpeg;base64,..."; // VNRVJIET logo placeholder
@@ -49,7 +45,7 @@ const GeneratePDF = () => {
           doc.setFontSize(16);
           doc.setTextColor(100);
           doc.text(`Research Papers by ${faculty.facultyName}`, 50, 30);
-          console.log("Bye")
+
           // Add research image
           doc.addImage(researchImage, "JPEG", 160, 8, 40, 40);
 
@@ -67,44 +63,61 @@ const GeneratePDF = () => {
           );
 
           // Prepare data for the table
-          // const tableData = faculty.publications.map((publication) => [
-          //   publication.publicationId,
-          //   publication.publicationTitle,
-          //   publication.publicationType,
-          //   publication.dateOfPublication,
-          // ]);
+          const tableData = faculty.publications.map((publication) => [
+            publication.publicationId,
+            publication.publicationTitle,
+            publication.publicationType,
+            publication.conferenceOrJournal,
+            publication.dateOfPublication,
+            publication.indexedIn,
+            publication.impactFactor,
+            publication.hIndex,
+            publication.citationCnt,
+          ]);
 
           // Add table with styles
-          // doc.autoTable({
-          //   head: [["ID", "Title", "Type", "Year"]],
-          //   body: tableData,
-            // startY: 60,
-            // styles: {
-            //   fontSize: 10,
-            //   halign: "center",
-            //   valign: "middle",
-            //   cellPadding: 3,
-            //   overflow: "linebreak",
-            //   lineColor: [44, 62, 80],
-            //   lineWidth: 0.5,
-            //   font: "helvetica",
-            //   textColor: [44, 62, 80],
-            // },
-            // headStyles: {
-            //   fillColor: [23, 162, 184],
-            //   textColor: [255, 255, 255],
-            //   fontSize: 11,
-            //   fontStyle: "bold",
-            // },
-          //   bodyStyles: {
-          //     fillColor: [245, 245, 245],
-          //   },
-          //   alternateRowStyles: {
-          //     fillColor: [255, 255, 255],
-          //   },
-          //   margin: { top: 10 },
-          // });
-          console.log("Reached")
+          doc.autoTable({
+            head: [
+              [
+                "ID",
+                "Title",
+                "Type",
+                "Conference/Journal",
+                "Date",
+                "Indexed In",
+                "Impact Factor",
+                "h-Index",
+                "Citations",
+              ],
+            ],
+            body: tableData,
+            startY: 60,
+            styles: {
+              fontSize: 10,
+              halign: "center",
+              valign: "middle",
+              cellPadding: 3,
+              overflow: "linebreak",
+              lineColor: [44, 62, 80],
+              lineWidth: 0.5,
+              font: "helvetica",
+              textColor: [44, 62, 80],
+            },
+            headStyles: {
+              fillColor: [23, 162, 184],
+              textColor: [255, 255, 255],
+              fontSize: 11,
+              fontStyle: "bold",
+            },
+            bodyStyles: {
+              fillColor: [245, 245, 245],
+            },
+            alternateRowStyles: {
+              fillColor: [255, 255, 255],
+            },
+            margin: { top: 10 },
+          });
+
           // Footer with page number
           const pageCount = doc.internal.getNumberOfPages();
           for (let i = 1; i <= pageCount; i++) {
@@ -131,14 +144,14 @@ const GeneratePDF = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Generate Faculty Report</h1>
-      <div>
+      <div className="input-container">
         <label>
           Enter Faculty Id:
           <input type="text" value={id} onChange={handleInputChange} />
         </label>
-        <button onClick={generatePDF} disabled={loading}>
+        <button onClick={generatePDF} disabled={loading} className="generate-button">
           {loading ? "Generating..." : "Generate"}
         </button>
       </div>
