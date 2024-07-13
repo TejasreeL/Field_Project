@@ -1,13 +1,12 @@
 import React from "react";
-import GeneratePDF from "./GeneratePDF";
-import './form.css';
-import PublicationForm from "./publicationForm";
-
+import "./form.css";
+import Pubs from "./publicationForm";
+import FetchFacultyData from "./GPDF.js";
 function App() {
   return (
     <div className="App">
-        {/* <PublicationForm /> */}
-        <GeneratePDF />
+      <Pubs />
+      {/* <FetchFacultyData /> */}
     </div>
   );
 }

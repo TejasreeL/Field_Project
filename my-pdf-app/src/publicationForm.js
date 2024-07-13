@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import "./App.css";
 
-function PublicationForm() {
+function Pubs() {
   const [formData, setFormData] = useState({
     publicationId: "",
     publicationTitle: "",
@@ -63,7 +64,7 @@ function PublicationForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("https://sheetdb.io/api/v1/ohpviljncwcoi", {
+    fetch("https://sheetdb.io/api/v1/u9dwnx6x8tzlx", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -142,7 +143,7 @@ function PublicationForm() {
       <div className="header-container">
         <header>
           <div style={{ position: "relative", width: "100%" }}>
-            <img
+            {/* <img
               src="https://media.licdn.com/dms/image/C560BAQFKt8O5GdaFjw/company-logo_200_200/0/1680080095222/vnr_vignanajyothiinstituteofengineeringandtechnology_logo?e=2147483647&v=beta&t=TbOLxNjzU1LYPUoXNYPFMXd3-pUKhPwWyyyFfOBZn08"
               alt="Your Logo"
               style={{
@@ -151,7 +152,7 @@ function PublicationForm() {
                 float: "left",
                 margin: "10px 15px 10px 0",
               }}
-            />
+            /> */}
             <h1>Publication Form</h1>
             <div className="logo">
               <b>VNRVJIET</b>
@@ -184,7 +185,7 @@ function PublicationForm() {
             <label htmlFor="publicationTitle">Publication Title:</label>
             <input
               type="text"
-              id="publicationTitle"
+              id="publicati++++++++++++++++++++++++++++onTitle"
               name="publicationTitle"
               value={formData.publicationTitle}
               onChange={handleChange}
@@ -651,21 +652,21 @@ function PublicationForm() {
               size="25"
             />
           </div>
-          {formData.authorIds.map((authorId, index) => (
+          {/* {formData.authorIds.map((authorId, index) => (
             <div className="form-group" key={index}>
               <label htmlFor={`Author_ID_${index + 1}`}>
-                Author_ID_{index + 1}:
+                {`Author_ID_${index + 1}`}:
               </label>
               <input
                 type="text"
                 id={`Author_ID_${index + 1}`}
                 name={`Author_ID_${index + 1}`}
                 value={authorId}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, index)}
                 size="25"
               />
             </div>
-          ))}
+          ))} */}
         </section>
         <button type="submit">Submit</button>
       </form>
@@ -673,4 +674,4 @@ function PublicationForm() {
   );
 }
 
-export default PublicationForm;
+export default Pubs;
